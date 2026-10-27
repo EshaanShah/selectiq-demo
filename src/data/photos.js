@@ -6,7 +6,7 @@ export const initialPhotos = [
   { id: 3, url: img(1779414), category: 'review', title: 'Gathered for the vows', moment: 'Outdoor ceremony wide shot', explanation: 'The full ceremony scene adds valuable context, but faces and emotion are less visible from this distance.' },
   { id: 4, url: img(20892660), category: 'keep', title: 'Joy in motion', moment: 'Newlyweds laughing', explanation: 'Natural laughter and movement create the kind of honest, unscripted frame your brief prioritizes.' },
   { id: 5, url: img(15530657), category: 'keep', title: 'The room erupts', moment: 'Friends laughing at the reception', explanation: 'A warm, unposed reaction from the couple and their friend gives this frame authentic emotional storytelling.' },
-  { id: 6, url: img(1024960), category: 'reject', title: 'Twilight walk', moment: 'Silhouetted beach portrait', explanation: 'Atmospheric and polished, but the distant silhouette reveals less emotion than the strongest candid frames.' },
+  { id: 6, url: img(1024960), category: 'review', title: 'Dream in motion', moment: 'Intentional motion blur', intentionalBlur: true, explanation: 'The frame is soft, but the blur feels expressive rather than accidental. Your creative direction asks SelectIQ to protect atmospheric images like this when they support the story.' },
   { id: 7, url: img(3014856), category: 'reject', title: 'Under the string lights', moment: 'Posed couple portrait', explanation: 'The lighting and composition are strong, but this carefully directed portrait is less aligned with your candid preference.' },
   { id: 8, url: img(3292697), category: 'keep', title: 'Sparkler kiss', moment: 'Couple surrounded by friends', explanation: 'Recommended because it combines genuine celebration, community, and an emotionally charged unscripted moment.' },
   { id: 9, url: img(24181537), category: 'keep', title: 'A mother’s touch', moment: 'Bride and mother holding hands', explanation: 'Recommended because this quiet mother-daughter connection directly matches your priority for meaningful family emotion.' },
@@ -47,6 +47,14 @@ export const comparisons = [
     options: [
       { id: 'family-interaction', url: img(34584733), label: 'Family connection', note: 'A bride entering with her parents' },
       { id: 'decorative-detail', url: img(169190), label: 'Decorative detail', note: 'Reception florals and table styling' },
+    ],
+  },
+  {
+    prompt: 'How should SelectIQ treat creative blur?',
+    context: 'A technically soft frame can still be the right frame when the feeling is intentional.',
+    options: [
+      { id: 'intentional-motion', url: img(1024960), label: 'Keep the feeling', note: 'Protect expressive motion and atmosphere', imageClass: 'intentional-motion-image' },
+      { id: 'technical-sharpness', url: img(931796), label: 'Favor sharpness', note: 'Give crisp technical detail more weight' },
     ],
   },
 ]

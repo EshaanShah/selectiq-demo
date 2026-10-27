@@ -5,7 +5,7 @@ import {
 } from 'lucide-react'
 import { comparisons, fallbackImage, initialPhotos } from './data/photos'
 
-const briefDefault = 'Prioritize candid emotion, meaningful family interactions, and authentic moments over traditional posed portraits.'
+const briefDefault = 'Prioritize candid emotion, meaningful family interactions, and authentic moments over traditional posed portraits. Keep expressive motion blur when it supports the atmosphere of the day.'
 
 function Brand({ inverse = false }) {
   return (
@@ -45,6 +45,7 @@ function PresenterGuide({ onClose }) {
     { number: '01', title: 'Candid emotion', detail: 'Pick the left photo — the bride and her mother holding hands.' },
     { number: '02', title: 'Natural laughter', detail: 'Pick the left photo — the newlyweds laughing with friends.' },
     { number: '03', title: 'Family connection', detail: 'Pick the left photo — the bride entering with her parents.' },
+    { number: '04', title: 'Keep the feeling', detail: 'Pick the left photo — intentional blur is treated as a creative choice, not an automatic reject.' },
   ]
 
   return (
@@ -53,7 +54,7 @@ function PresenterGuide({ onClose }) {
         <button onClick={onClose} aria-label="Close presenter guide" className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-ivory text-forest transition hover:bg-forest hover:text-white"><X size={17} /></button>
         <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.18em] text-gold"><BookOpen size={15} /> Private presentation cheat sheet</div>
         <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-.03em] text-forest">The 60-second demo path</h2>
-        <p className="mt-2 max-w-xl text-sm leading-6 text-forest/55">Use these choices so the final gallery clearly learns “candid emotion, natural laughter, and family connection.” Close this panel before presenting.</p>
+        <p className="mt-2 max-w-xl text-sm leading-6 text-forest/55">Use these choices so the final gallery clearly learns the photographer’s emotional priorities and protects intentional motion blur. Close this panel before presenting.</p>
 
         <div className="mt-7 space-y-3">
           {picks.map((pick) => (
@@ -66,7 +67,7 @@ function PresenterGuide({ onClose }) {
 
         <div className="mt-6 rounded-2xl bg-forest p-5 text-white">
           <p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#d8c189]">Best results-screen moment</p>
-          <p className="mt-2 text-sm leading-6 text-white/75">Point out the learned-style chips and the five emotional Keep images. Then open <strong className="text-white">Review → “Walking in together”</strong> and move it to Keep. The counts update from 5/4/15 to 6/3/15, showing the photographer stays in control.</p>
+          <p className="mt-2 text-sm leading-6 text-white/75">Point out <strong className="text-white">“Dream in motion”</strong> in Keep: softness was noticed, but the photographer’s direction protected it. Then move <strong className="text-white">Review → “Walking in together”</strong> to Keep to show the photographer always has final control.</p>
         </div>
         <button onClick={onClose} className="mt-6 w-full rounded-xl bg-gold px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#9f824b]">Got it — start the demo</button>
       </section>
@@ -103,6 +104,7 @@ function Welcome({ brief, setBrief, onStart }) {
 
           <label className="mt-6 block text-sm font-semibold text-forest">What’s important for this shoot?</label>
           <textarea value={brief} onChange={(e) => setBrief(e.target.value)} rows={3} className="mt-2 w-full resize-none rounded-2xl border border-forest/15 bg-white px-4 py-3.5 text-sm leading-6 text-forest shadow-sm transition placeholder:text-forest/30 focus:border-gold" />
+          <p className="mt-2 flex items-start gap-2 text-[11px] leading-5 text-forest/45"><Sparkles size={13} className="mt-0.5 shrink-0 text-gold" /> This direction travels with every image. Describe mood, people, story, or creative choices—like grain, blur, or imperfect framing—that should be protected.</p>
           <button onClick={onStart} disabled={!brief.trim()} className="mt-5 flex w-full items-center justify-center gap-3 rounded-xl bg-forest px-5 py-4 text-sm font-semibold text-white shadow-lg shadow-forest/15 transition hover:-translate-y-0.5 hover:bg-[#175443] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:self-start">
             Start Learning My Style <ArrowRight size={17} />
           </button>
@@ -121,7 +123,7 @@ function Welcome({ brief, setBrief, onStart }) {
   )
 }
 
-function Learn({ step, selected, onSelect, onBack, onAnalyze }) {
+function Learn({ step, selected, brief, onSelect, onBack, onAnalyze }) {
   const done = step >= comparisons.length
   const current = comparisons[Math.min(step, comparisons.length - 1)]
   const currentChoice = selected[step]
@@ -139,19 +141,26 @@ function Learn({ step, selected, onSelect, onBack, onAnalyze }) {
       <div className="text-center">
         <span className="text-[10px] font-bold uppercase tracking-[.22em] text-gold">Preference calibration</span>
         <h1 className="mt-3 font-display text-4xl font-semibold tracking-[-.03em] text-forest md:text-5xl">{done ? 'Your point of view is taking shape.' : 'Teach SelectIQ your photography style.'}</h1>
-        <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-forest/60">{done ? 'Three choices are enough to shape this demo selection.' : 'Choose the photograph you would keep. Your selections help shape your personalized recommendations.'}</p>
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-forest/60">{done ? 'Your brief and four choices now shape this demo selection.' : 'Choose the photograph you would keep. Your selections help shape your personalized recommendations.'}</p>
+      </div>
+
+      <div className="mx-auto mt-6 flex max-w-4xl items-start gap-3 rounded-2xl border border-gold/25 bg-[#f1eadb] px-4 py-3 text-left">
+        <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-gold text-white"><Sparkles size={13} /></span>
+        <div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#7a5d23]">Your creative brief is active</p><p className="mt-1 line-clamp-2 text-xs leading-5 text-forest/65">“{brief}”</p></div>
       </div>
 
       {!done ? (
         <div className="mt-8">
           <p className="mb-4 text-center font-display text-xl font-semibold text-forest">{current.prompt}</p>
+          {current.context && <p className="mx-auto -mt-2 mb-5 max-w-xl text-center text-xs leading-5 text-forest/50">{current.context}</p>}
           <div className="grid gap-5 md:grid-cols-2">
             {current.options.map((option) => {
               const isSelected = currentChoice === option.id
               return (
                 <article key={option.id} className={`overflow-hidden rounded-[24px] border-2 bg-white shadow-soft transition-all duration-300 ${isSelected ? 'selection-pop border-forest' : 'border-transparent hover:-translate-y-1 hover:border-gold/45'}`}>
                   <div className="relative aspect-[16/9] overflow-hidden bg-[#e7e1d5]">
-                    <SmartImage src={option.url} alt={option.label} className="h-full w-full object-cover transition duration-700 hover:scale-[1.025]" />
+                    <SmartImage src={option.url} alt={option.label} className={`h-full w-full object-cover transition duration-700 hover:scale-[1.025] ${option.imageClass || ''}`} />
+                    {option.id === 'intentional-motion' && <span className="absolute bottom-3 left-3 rounded-full border border-white/30 bg-forest/65 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[.13em] text-white backdrop-blur-md">Intentional motion</span>}
                     {isSelected && <div className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-forest text-white shadow-lg"><Check size={20} strokeWidth={3} /></div>}
                   </div>
                   <div className="flex items-center justify-between gap-4 p-5">
@@ -168,7 +177,7 @@ function Learn({ step, selected, onSelect, onBack, onAnalyze }) {
       ) : (
         <div className="mx-auto mt-10 max-w-2xl rounded-[26px] border border-forest/10 bg-white p-7 text-center shadow-soft md:p-10">
           <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#e0ece6] text-forest"><CheckCircle2 size={30} /></div>
-          <div className="mt-6 grid grid-cols-3 gap-3">{selected.map((choice, i) => <div key={choice} className="rounded-xl bg-ivory p-3"><p className="text-[10px] font-bold uppercase tracking-wider text-gold">Choice {i + 1}</p><p className="mt-1 truncate text-xs font-semibold capitalize text-forest">{choice.replaceAll('-', ' ')}</p></div>)}</div>
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{selected.map((choice, i) => <div key={choice} className="rounded-xl bg-ivory p-3"><p className="text-[10px] font-bold uppercase tracking-wider text-gold">Choice {i + 1}</p><p className="mt-1 truncate text-xs font-semibold capitalize text-forest">{choice.replaceAll('-', ' ')}</p></div>)}</div>
           <button onClick={onAnalyze} className="mt-7 inline-flex items-center gap-3 rounded-xl bg-forest px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-forest/15 transition hover:-translate-y-0.5 hover:bg-[#175443]">Analyze My Gallery <Sparkles size={17} /></button>
         </div>
       )}
@@ -215,7 +224,7 @@ const categoryMeta = {
   reject: { label: 'Reject', icon: XCircle, color: 'bg-[#5d625f] text-white', soft: 'bg-[#e9e9e6] text-[#515754]', description: 'Lower-priority photographs. Originals are never deleted.' },
 }
 
-function Results({ photos, setPhotos, selected }) {
+function Results({ photos, setPhotos, selected, brief }) {
   const [tab, setTab] = useState('keep')
   const [activeId, setActiveId] = useState(null)
   const [toast, setToast] = useState('')
@@ -249,6 +258,17 @@ function Results({ photos, setPhotos, selected }) {
         <div className="flex flex-wrap gap-2">{learnedStyle.map((label) => <span key={label} className="rounded-full bg-[#e0ece6] px-3 py-1.5 text-[10px] font-semibold text-forest">{label}</span>)}</div>
       </div>
 
+      <div className="mt-3 grid gap-3 lg:grid-cols-2">
+        <div className="rounded-2xl border border-forest/10 bg-white/70 p-4">
+          <p className="text-[10px] font-bold uppercase tracking-[.16em] text-gold">01 · Direction from you</p>
+          <p className="mt-2 text-xs leading-5 text-forest/60">“{brief}”</p>
+        </div>
+        <div className="flex items-start gap-3 rounded-2xl border border-gold/30 bg-[#f1eadb] p-4">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gold text-white"><ShieldCheck size={16} /></span>
+          <div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#7a5d23]">02 · Intent-aware quality check</p><p className="mt-1 text-xs leading-5 text-forest/60">Blur is noticed, not blindly eliminated. If it supports your stated style, the image can still be recommended.</p></div>
+        </div>
+      </div>
+
       <section className="mt-8 grid gap-3 md:grid-cols-3">
         {Object.entries(categoryMeta).map(([key, meta]) => {
           const Icon = meta.icon
@@ -278,6 +298,7 @@ function Results({ photos, setPhotos, selected }) {
                 </div>
                 <div className="absolute inset-x-0 bottom-0 bg-forest/80 p-3 text-white opacity-0 backdrop-blur-sm transition group-hover:opacity-100"><p className="text-xs font-semibold">{photo.title}</p><p className="mt-0.5 text-[10px] text-white/65">{photo.moment}</p></div>
                 <span className="absolute right-2.5 top-2.5 rounded-full bg-white/90 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-forest shadow-sm">#{String(photo.id).padStart(3, '0')}</span>
+                {photo.intentionalBlur && <span className="absolute left-2.5 top-2.5 rounded-full border border-white/30 bg-forest/75 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-md">Aesthetic blur · protected</span>}
               </button>
             ))}
           </div>
@@ -297,6 +318,7 @@ function Results({ photos, setPhotos, selected }) {
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.16em] text-forest/50"><Sparkles size={14} className="text-gold" /> Why SelectIQ placed it here</div>
                 <p className="mt-3 text-sm leading-6 text-forest/70">{active.explanation}</p>
               </div>
+              {active.intentionalBlur && <div className="mt-3 rounded-2xl border border-gold/30 bg-[#f1eadb] p-4"><p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#7a5d23]">Protected by your direction</p><p className="mt-1.5 text-xs leading-5 text-forest/60">Softness was detected, but your brief and preference signal that atmosphere matters more than perfect sharpness here.</p></div>}
               <div className="mt-auto pt-8"><p className="text-xs font-semibold text-forest">Move this photograph</p><div className="mt-3 grid gap-2 sm:grid-cols-3 lg:grid-cols-1">{Object.entries(categoryMeta).map(([key, meta]) => { const Icon = meta.icon; const isCurrent = active.category === key; return <button key={key} onClick={() => movePhoto(key)} disabled={isCurrent} className={`flex items-center justify-between rounded-xl border px-4 py-3 text-xs font-semibold transition ${isCurrent ? 'cursor-default border-forest bg-forest text-white' : 'border-forest/12 text-forest hover:border-forest hover:bg-forest hover:text-white'}`}><span className="flex items-center gap-2"><Icon size={15} /> Move to {meta.label}</span>{isCurrent && <Check size={14} />}</button> })}</div></div>
             </aside>
           </div>
@@ -322,15 +344,25 @@ export default function App() {
     setSelected((items) => [...items, id])
     window.setTimeout(() => setStep((value) => value + 1), 650)
   }
-  const completeAnalysis = () => setScreen(4)
+  const completeAnalysis = () => {
+    const protectsCreativeBlur = selected.includes('intentional-motion') || /blur|motion|dream|atmosphere|vibe|soft|grain/i.test(brief)
+    setPhotos((items) => items.map((photo) => photo.id === 6 ? {
+      ...photo,
+      category: protectsCreativeBlur ? 'keep' : 'review',
+      explanation: protectsCreativeBlur
+        ? 'The frame is soft, but the blur feels expressive rather than accidental. Your creative brief and preference choices ask SelectIQ to protect atmospheric images like this when they support the story.'
+        : 'The frame is intentionally soft and atmospheric. Because your direction does not explicitly prioritize creative blur, SelectIQ sends it to Review instead of automatically rejecting it.',
+    } : photo))
+    setScreen(4)
+  }
 
   return (
     <div className="noise min-h-screen bg-ivory">
       <Header screen={screen} onReset={reset} onGuide={() => setShowGuide(true)} />
       {screen === 1 && <Welcome brief={brief} setBrief={setBrief} onStart={() => setScreen(2)} />}
-      {screen === 2 && <Learn step={step} selected={selected} onSelect={choose} onBack={() => setScreen(1)} onAnalyze={() => setScreen(3)} />}
+      {screen === 2 && <Learn step={step} selected={selected} brief={brief} onSelect={choose} onBack={() => setScreen(1)} onAnalyze={() => setScreen(3)} />}
       {screen === 3 && <Analysis onComplete={completeAnalysis} />}
-      {screen === 4 && <Results photos={photos} setPhotos={setPhotos} selected={selected} />}
+      {screen === 4 && <Results photos={photos} setPhotos={setPhotos} selected={selected} brief={brief} />}
       {showGuide && <PresenterGuide onClose={() => setShowGuide(false)} />}
     </div>
   )
